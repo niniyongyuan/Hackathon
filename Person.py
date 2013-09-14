@@ -20,9 +20,9 @@ class Person(object):
 		#change it to load the person
 		canvas.create_oval(left, right, top, bottom, fill="red")
 
-	def run(self, canvas):
+	def run(self):
 		self.centerX += self.speed
 
 
-	def jump(self, canvas):
+	def jump(self):
 		self.centerY += self.speed
