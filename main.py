@@ -23,9 +23,9 @@ class mainGame(object):
         if (event.keysym == "p"):
             self.isPaused = not self.isPaused
     def timerFired(self): pass
-    def init(self):
+    def init(self, canvas):
         self.isPaused = False
-        self.person = new Person(canvas)
+        self.person = Person(canvas)
     def redrawAll(self): pass
     def run(self, width=600, height=400):
         # create the root and the canvas
@@ -55,11 +55,10 @@ class mainGame(object):
             # pause, then call timerFired again
             self.canvas.after(self.timerFiredDelay, timerFiredWrapper)
         # init and get timerFired running
-        self.init()
+        self.init(canvas)
         timerFiredWrapper()
         # and launch the app
         root.mainloop()
 
 game = mainGame()
 game.run()
-
