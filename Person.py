@@ -23,4 +23,4 @@ class Person(object):
 
 
 	def jump(self, canvas):
-		self.centY += self.speed
+		self.centerY += self.speed
