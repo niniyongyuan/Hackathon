@@ -34,7 +34,7 @@ class Person(object):
 
     def jump(self):
         self.centerY += self.speedY
-        self.speedY++
+        
 
 
 ###########################################
@@ -59,7 +59,7 @@ class mainGame(object):
     # Override these methods when creating your own animation
         
     def timerFired(self):
-        
+        self.canvas.data.person.speedY += 1
 
     def redrawAll(self):
         self.canvas.data.person.drawPerson(self.canvas)
