@@ -18,7 +18,7 @@ class Person(object):
 		top = self.centerY - self.radius
 		bottom = self.centerY + self.radius
 		#change it to load the person
-		canvas.create_oval(canvas, left, right, top, bottom, fill="red")
+		canvas.create_oval(left, right, top, bottom, fill="red")
 
 	def run(self, canvas):
 		self.centerX += self.speed
