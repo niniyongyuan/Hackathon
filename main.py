@@ -23,7 +23,7 @@ class Person(object):
         top = self.centerY - self.radius
         bottom = self.centerY + self.radius
         #change it to load the person
-        canvas.create_oval(left, right, top, bottom, fill="red")
+        canvas.create_oval(left, top, right, bottom, fill="red")
 
     def run(self):
         self.centerX += self.speed
@@ -38,19 +38,18 @@ class Person(object):
 
 class mainGame(object):
     def keyPressed(self, event):
-        if (event.keysym == "right"):
-            print 1
+        if (event.keysym == 'a" or event.keysym == "Left"):
+            self.canvas.data.person.speed = -self.canvas.data.person.speed
             self.canvas.data.person.run()
-            print self.canvas.data.person.centerX
             redrawAll()# use this state for char dir. facing
-        #if (event.keysym == "d" or event.keysym == "Right"):
-           # person.centerX += person.speed
-            #person.faceLeft = False
-        #if (event.keysym == "w" or event.keysym == "Up"):
-         #   person.centerY -= person.speed
-          #  person.jumping = True
-        #if (event.keysym == "p"):
-         #   self.isPaused = not self.isPaused
+        if (event.keysym == "d" or event.keysym == "Right"):
+            self.canvas.data.person.run()
+            person.faceLeft = False
+        if (event.keysym == "w" or event.keysym == "Up"):
+            person.jumping = True
+            self.canvas.data.person.jump()
+        if (event.keysym == "p"):
+            self.isPaused = not self.isPaused
     # Override these methods when creating your own animation
         
     def timerFired(self): pass
