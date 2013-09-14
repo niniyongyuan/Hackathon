@@ -2,40 +2,84 @@
 # Weiqi Cai, Megan Chen, Lina Li, Teng Zhang
 
 from Tkinter import *
-import Person
+
+class Person(object):
+    def __init__(self, canvas):
+        self.radius = 10
+        self.canvas = canvas
+        #magic number need to be changed to canvas.height-size
+        self.centerX = 10
+        self.centerY = 100
+        self.iscollide = False
+        self.floatspeedx = 0
+        self.floatspeedy = 0
+        self.speed = 5
+        self.jumping = False
+        self.faceLeft = False
+
+    def drawPerson(self, canvas):
+        left = self.centerX - self.radius
+        right = self.centerX + self.radius
+        top = self.centerY - self.radius
+        bottom = self.centerY + self.radius
+        #change it to load the person
+        canvas.create_oval(left, right, top, bottom, fill="red")
+
+    def run(self):
+        self.centerX += self.speed
+
+
+    def jump(self):
+        self.centerY += self.speed
 
 ###########################################
 # Game class
 ###########################################
 
 class mainGame(object):
-    # Override these methods when creating your own animation
     def keyPressed(self, event):
-        if (event.keysym == "a" or event.keysym == "Left"):
-            person.centerX -= person.speed
-            person.faceLeft = True # use this state for char dir. facing
-        if (event.keysym == "d" or event.keysym == "Right"):
-            person.centerX += person.speed
-            person.faceLeft = False
-        if (event.keysym == "w" or event.keysym == "Up"):
-            person.centerY -= person.speed
-            person.jumping = True
-        if (event.keysym == "p"):
-            self.isPaused = not self.isPaused
+        if (event.keysym == "right"):
+            print 1
+            self.canvas.data.person.run()
+            print self.canvas.data.person.centerX
+            redrawAll()# use this state for char dir. facing
+        #if (event.keysym == "d" or event.keysym == "Right"):
+           # person.centerX += person.speed
+            #person.faceLeft = False
+        #if (event.keysym == "w" or event.keysym == "Up"):
+         #   person.centerY -= person.speed
+          #  person.jumping = True
+        #if (event.keysym == "p"):
+         #   self.isPaused = not self.isPaused
+    # Override these methods when creating your own animation
+        
     def timerFired(self): pass
-    def init(self, canvas):
-        self.isPaused = False
-        self.person = Person(canvas)
-    def redrawAll(self): pass
-    def run(self, width=600, height=400):
+
+    def redrawAll(self):
+        self.canvas.data.person.drawPerson(self.canvas)
+
+    def run(self):
         # create the root and the canvas
+        global root
         root = Tk()
-        root.wm_title("Mission Gravimpossible")
-        self.width = width
-        self.height = height
-        self.canvas = Canvas(root, width=width, height=height)
+        windowWidth = 700
+        windowHeight = 500
+        self.canvas = Canvas(root, width=windowWidth, height=windowHeight)
+        root.resizable(width=FALSE, height=FALSE)
+        # change mouse cursor
+        root.config(cursor="plus")
+        root.title('HackCMU')
         self.canvas.pack()
-        # set up events
+        # Store canvas in root and in canvas itself for callbacks
+        #root.canvas = canvas.canvas = canvas
+        # Set up canvas data and call init
+        class Struct: pass
+        self.canvas.data = Struct()
+        self.canvas.data.windowWidth = windowWidth
+        self.canvas.data.windowHeight = windowHeight
+        self.canvas.data.person = Person(self.canvas)
+        self.canvas.data.person.drawPerson(self.canvas)
+
         def redrawAllWrapper():
             self.canvas.delete(ALL)
             self.redrawAll()
@@ -45,7 +89,7 @@ class mainGame(object):
         def keyPressedWrapper(event):
             self.keyPressed(event)
             redrawAllWrapper()
-        root.bind("<Button-1>", mousePressedWrapper)
+        # set up events
         root.bind("<Key>", keyPressedWrapper)
         # set up timerFired events
         self.timerFiredDelay = 250 # milliseconds
@@ -55,10 +99,10 @@ class mainGame(object):
             # pause, then call timerFired again
             self.canvas.after(self.timerFiredDelay, timerFiredWrapper)
         # init and get timerFired running
-        self.init(canvas)
-        timerFiredWrapper()
+        timerFiredWrapper()        
         # and launch the app
-        root.mainloop()
+        root.mainloop()  
+        # This call BLOCKS (so your program waits until you close the window!)
 
 game = mainGame()
 game.run()
