@@ -9,6 +9,8 @@ class Person(object):
 		self.floatspeedx = 0
 		self.floatspeedy = 0
 		self.speed = 5
+		self.jumping = False
+		self.faceLeft = False
 
 	def drawPerson(self, canvas):
 		left = self.centerX - self.radius
