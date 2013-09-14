@@ -13,9 +13,10 @@ class Person(object):
         self.iscollide = False
         self.floatspeedx = 0
         self.floatspeedy = 0
-        self.speed = 5
+        self.speedX = 5
+        self.speedY = 0
         self.jumping = False
-        self.faceLeft = False
+        self.heading = True
 
     def drawPerson(self, canvas):
         left = self.centerX - self.radius
@@ -26,7 +27,9 @@ class Person(object):
         canvas.create_oval(left, top, right, bottom, fill="red")
 
     def run(self):
-        self.centerX += self.speed
+        if self.heading:
+            self.centerX += self.speed
+        else: self.centerX -= self.speed
 
 
     def jump(self):
@@ -38,15 +41,15 @@ class Person(object):
 
 class mainGame(object):
     def keyPressed(self, event):
-        if (event.keysym == 'a" or event.keysym == "Left"):
-            self.canvas.data.person.speed = -self.canvas.data.person.speed
+        if (event.keysym == "a" or event.keysym == "Left"):
+            self.canvas.data.person.heading = False
             self.canvas.data.person.run()
-            redrawAll()# use this state for char dir. facing
+            #redrawAll()# use this state for char dir. facing
         if (event.keysym == "d" or event.keysym == "Right"):
-            self.canvas.data.person.run()
-            person.faceLeft = False
+            self.canvas.data.person.heading = True
+            self.canvas.data.person.run()   
         if (event.keysym == "w" or event.keysym == "Up"):
-            person.jumping = True
+            self.canvas.data.person.jumping = True
             self.canvas.data.person.jump()
         if (event.keysym == "p"):
             self.isPaused = not self.isPaused
