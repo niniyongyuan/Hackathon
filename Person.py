@@ -8,7 +8,7 @@ class Person(object):
 		self.iscollide = False
 		self.floatspeedx = 0
 		self.floatspeedy = 0
-		self.speed = 5
+		self.speed = 2
 		self.jumping = False
 		self.faceLeft = False
 

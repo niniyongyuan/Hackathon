@@ -26,15 +26,15 @@ class Person(object):
         #change it to load the person
         canvas.create_oval(left, top, right, bottom, fill="red")
 
-
-    def moveLeft(self, canvas):
-        self.canvas.data.person.centerX += 1
+    def update(self, canvas):
+        self.canvas.data.person.centerX += self.speedX
+        self.canvas.data.person.centerY += self.speedY
+        self.speedY+=5
 
     def run(self):
         if self.heading:
             self.centerX += self.speedX
         else: self.centerX -= self.speedX
-
 
     def jump(self):
         self.centerY += self.speedY
@@ -49,22 +49,22 @@ class mainGame(object):
     def keyPressed(self, event):
         if (event.keysym == "a" or event.keysym == "Left"):
             self.canvas.data.person.heading = False
-            self.canvas.data.person.run()
+            #self.canvas.data.person.run()
             #redrawAll()# use this state for char dir. facing
         if (event.keysym == "d" or event.keysym == "Right"):
             self.canvas.data.person.heading = True
-            self.canvas.data.person.run()   
+            #self.canvas.data.person.run()   
         if (event.keysym == "w" or event.keysym == "Up"):
             self.canvas.data.person.jumping = True
-            self.jumpSpeed = -5
-            self.canvas.data.person.jump()
+            self.canvas.data.person.speedY = -20
         if (event.keysym == "p"):
             self.isPaused = not self.isPaused
     # Override these methods when creating your own animation
         
     def timerFired(self):
+        self.canvas.data.person.update(self.canvas)
         #self.canvas.data.person.right += 1
-        self.canvas.data.person.moveLeft(self.canvas)
+        #self.canvas.data.person.moveLeft(self.canvas)
 
     def redrawAll(self):
         self.canvas.data.person.drawPerson(self.canvas)
@@ -103,7 +103,7 @@ class mainGame(object):
         # set up events
         root.bind("<Key>", keyPressedWrapper)
         # set up timerFired events
-        self.timerFiredDelay = 250 # milliseconds
+        self.timerFiredDelay = 100 # milliseconds
         def timerFiredWrapper():
             self.timerFired()
             redrawAllWrapper()
