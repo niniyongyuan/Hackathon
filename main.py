@@ -3,6 +3,40 @@
 
 from Tkinter import *
 
+class Platform(object):
+    def __init__(self, canvas):
+        self.canvas = canvas
+        self.row = 20
+        self.col = 30
+        self.width = canvas.data.windowWidth/self.col
+
+    def drawPlatform(self,canvas):
+        matrix = [[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                  [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
+        for i in xrange(self.row):
+            for j in xrange(self.col):
+                if matrix[i][j] == 1:
+                    canvas.create_rectangle(self.width*j, self.width*i,
+                        self.width*(j+1),self.width*(i+1),fill="black")
+
 class Person(object):
     def __init__(self, canvas):
         self.radius = 10
@@ -68,13 +102,14 @@ class mainGame(object):
 
     def redrawAll(self):
         self.canvas.data.person.drawPerson(self.canvas)
+        self.canvas.data.platform.drawPlatform(self.canvas)
 
     def run(self):
         # create the root and the canvas
         global root
         root = Tk()
-        windowWidth = 700
-        windowHeight = 500
+        windowWidth = 600
+        windowHeight = 400
         self.canvas = Canvas(root, width=windowWidth, height=windowHeight)
         root.resizable(width=FALSE, height=FALSE)
         # change mouse cursor
@@ -90,7 +125,9 @@ class mainGame(object):
         self.canvas.data.windowHeight = windowHeight
         self.canvas.data.person = Person(self.canvas)
         self.canvas.data.person.drawPerson(self.canvas)
-
+        self.canvas.data.platform = Platform(self.canvas)
+        self.canvas.data.platform.drawPlatform(self.canvas)
+        
         def redrawAllWrapper():
             self.canvas.delete(ALL)
             self.redrawAll()
