@@ -33,7 +33,9 @@ class Person(object):
 
 
     def jump(self):
-        self.centerY += self.speed
+        self.centerY += self.speedY
+        self.speedY++
+
 
 ###########################################
 # Game class
@@ -50,12 +52,14 @@ class mainGame(object):
             self.canvas.data.person.run()   
         if (event.keysym == "w" or event.keysym == "Up"):
             self.canvas.data.person.jumping = True
+            self.jumpSpeed = -5
             self.canvas.data.person.jump()
         if (event.keysym == "p"):
             self.isPaused = not self.isPaused
     # Override these methods when creating your own animation
         
-    def timerFired(self): pass
+    def timerFired(self):
+        
 
     def redrawAll(self):
         self.canvas.data.person.drawPerson(self.canvas)
