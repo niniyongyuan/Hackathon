@@ -2,6 +2,7 @@
 # Weiqi Cai, Megan Chen, Lina Li, Teng Zhang
 
 from Tkinter import *
+import Person
 
 ###########################################
 # Game class
@@ -11,21 +12,20 @@ class mainGame(object):
     # Override these methods when creating your own animation
     def keyPressed(self, event):
         if (event.keysym == "a" or event.keysym == "Left"):
-            self.centerX -= self.speed
-            self.faceLeft = True # use this state for char dir. facing
+            person.centerX -= person.speed
+            person.faceLeft = True # use this state for char dir. facing
         if (event.keysym == "d" or event.keysym == "Right"):
-            self.centerX += self.speed
-            self.faceLeft = False
+            person.centerX += person.speed
+            person.faceLeft = False
         if (event.keysym == "w" or event.keysym == "Up"):
-            self.centerY -= self.speed
-            self.jumping = True
+            person.centerY -= person.speed
+            person.jumping = True
         if (event.keysym == "p"):
             self.isPaused = not self.isPaused
     def timerFired(self): pass
     def init(self):
         self.isPaused = False
-        self.jumping = False
-        self.faceLeft = False
+        self.person = new Person(canvas)
     def redrawAll(self): pass
     def run(self, width=600, height=400):
         # create the root and the canvas
