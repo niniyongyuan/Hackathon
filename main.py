@@ -104,6 +104,14 @@ class mainGame(object):
         self.canvas.data.person.drawPerson(self.canvas)
         self.canvas.data.platform.drawPlatform(self.canvas)
 
+    def initPerson(self):
+        self.canvas.data.person = Person(self.canvas)
+        self.canvas.data.person.drawPerson(self.canvas)
+
+    def initPlatform(self):
+        self.canvas.data.platform = Platform(self.canvas)
+        self.canvas.data.platform.drawPlatform(self.canvas)
+
     def run(self):
         # create the root and the canvas
         global root
@@ -123,11 +131,9 @@ class mainGame(object):
         self.canvas.data = Struct()
         self.canvas.data.windowWidth = windowWidth
         self.canvas.data.windowHeight = windowHeight
-        self.canvas.data.person = Person(self.canvas)
-        self.canvas.data.person.drawPerson(self.canvas)
-        self.canvas.data.platform = Platform(self.canvas)
-        self.canvas.data.platform.drawPlatform(self.canvas)
         
+        
+
         def redrawAllWrapper():
             self.canvas.delete(ALL)
             self.redrawAll()
@@ -137,6 +143,16 @@ class mainGame(object):
         def keyPressedWrapper(event):
             self.keyPressed(event)
             redrawAllWrapper()
+
+        #initialize the person
+        def personWrapper():
+            self.initPerson()
+        def platformWrapper():
+            self.initPlatform()
+
+
+        personWrapper()
+        platformWrapper()
         # set up events
         root.bind("<Key>", keyPressedWrapper)
         # set up timerFired events
