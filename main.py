@@ -26,10 +26,14 @@ class Person(object):
         #change it to load the person
         canvas.create_oval(left, top, right, bottom, fill="red")
 
+
+    def moveLeft(self, canvas):
+        self.canvas.data.person.centerX += 1
+
     def run(self):
         if self.heading:
-            self.centerX += self.speed
-        else: self.centerX -= self.speed
+            self.centerX += self.speedX
+        else: self.centerX -= self.speedX
 
 
     def jump(self):
@@ -59,7 +63,8 @@ class mainGame(object):
     # Override these methods when creating your own animation
         
     def timerFired(self):
-        self.canvas.data.person.speedY += 1
+        #self.canvas.data.person.right += 1
+        self.canvas.data.person.moveLeft(self.canvas)
 
     def redrawAll(self):
         self.canvas.data.person.drawPerson(self.canvas)

@@ -13,12 +13,12 @@ class Person(object):
 		self.faceLeft = False
 
 	def drawPerson(self, canvas):
-		left = self.centerX - self.radius
-		right = self.centerX + self.radius
-		top = self.centerY - self.radius
-		bottom = self.centerY + self.radius
+		self.left = self.centerX - self.radius
+		self.right = self.centerX + self.radius
+		self.top = self.centerY - self.radius
+		self.bottom = self.centerY + self.radius
 		#change it to load the person
-		canvas.create_oval(left, right, top, bottom, fill="red")
+		canvas.create_oval(self.left, self.right, self.top, self.bottom, fill="red")
 
 	def run(self):
 		self.centerX += self.speed
