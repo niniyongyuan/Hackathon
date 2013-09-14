@@ -14,7 +14,7 @@ class mainGame(object):
     def redrawAll(self): pass
     
     # Call app.run(width,height) to get your app started
-    def run(self, width=300, height=300):
+    def run(self, width=600, height=400):
         # create the root and the canvas
         root = Tk()
         self.width = width
